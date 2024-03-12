@@ -1,117 +1,139 @@
-// 1
+function krito() {
+    const choices = ["tash", "kaichy", "kagaz"];
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    return choices[randomIndex];
+}
 
-// const options = ["таш", "кагаз", "кайчы"];
-// let userChoice;
-// let computerChoice;
+function Game() {
+    let azema = 0;
+    let computerScore = 0;
 
-// function getUserChoice() {
-//     userChoice = prompt("Таш, кагаз же кайчыдан бирин тандап койгонуз (отмена үчүн cancel):").toLowerCase();
-//     if (userChoice === "cancel") {
-//         return;
-//     } else if (!options.includes(userChoice)) {
-//         alert("Дүзгүн вариант танданыз!");
-//         getUserChoice();
-//     }
+    while (true) {
+        let userChoice = prompt("tandanyz: tash, kaichy je kagaz? (chygu uchun jazynyz 'otmena')").toLowerCase();
+        while (userChoice !== "tash" && userChoice !== "kaichy" && userChoice !== "kagaz" && userChoice !== "otmena") {
+            userChoice = prompt("tuura emes. dagy bir jolu araket kylyp korunuz: tash, kaichy je  kagaz? (chygu uchun 'otmena')").toLowerCase();
+        }
+        
+        if (userChoice === "otmena") {
+            break;
+        }
+        
+        const computerChoice = krito();
+       alert (`konpqter tandady: ${computerChoice}`);
+
+        if (userChoice === computerChoice) {
+            alert("chuchugulak!");
+        } else if ((userChoice === "tash" && computerChoice === "kaishy") ||
+                   (userChoice === "kaichy" && computerChoice === "kagaz") ||
+                   (userChoice === "kagaz" && computerChoice === "tash")) {
+            alert("siz jendiniz!");
+            azema++;
+        } else {
+            alert("konpqter jendi!");
+            computerScore++;
+        }
+
+        alert(`azyrky bal: siz ${azema}, konpqter ${computerScore}`);
+    }
+
+    if (azema > computerScore) {
+        alert("siz jendiniz!");
+    } else if (azema < computerScore) {
+        alert("konpqter jendi!");
+    } else {
+        alert("chuchugulak!");
+    } 
+};
+
+Game();
+
+
+
+
+
+
+// const words = ["kooz", "keremet", "jaratylysh", "jashoo", "suktanuu"];
+// let chosenWord = '';
+// let guessedWord = '';
+// let triesLeft = 6;
+// let guessedLetters = [];
+
+// function chooseWord() {
+//     const randomIndex = Math.floor(Math.random() * words.length);
+//     chosenWord = words[randomIndex];
 // }
 
-// function getComputerChoice() {
-//     const randomIndex = Math.floor(Math.random() * 3);
-//     computerChoice = options[randomIndex];
+// function initializeGame() {
+//     guessedWord = '_'.repeat(chosenWord.length);
+//     triesLeft = 6;
+//     guessedLetters = [];
 // }
 
-// function determineWinner() {
-//     if (userChoice === computerChoice) {
-//         alert("Бир туш!");
-//     } else if (
-//         (userChoice === "таш" && computerChoice === "кайчы") ||
-//         (userChoice === "кагаз" && computerChoice === "таш") ||
-//         (userChoice === "кайчы" && computerChoice === "кагаз")
-//     ) {
-//         alert("Сиз утуп алдыңыз!");
-//     } else {
-//         alert("Компьютер утуп алды!");
-//     }
+// function displayGameStatus() {
+//     alert("soz: " + guessedWord);
+//     alert("dagy bir jolu araket kylyp korunuz: " + triesLeft);
+//     alert("bul tamga jazylgan: " + guessedLetters.join(', '));
 // }
 
-// getUserChoice();
-// if (userChoice) {
-//     getComputerChoice();
-//     determineWinner();
+// function getUserGuess() {
+//     let guess = prompt("tamga jazynyz:");
+//     if (guess === null) {
+//         return null;
+//     }
+//     guess = guess.toLowerCase();
+//     if (!/[a-z]/.test(guess) || guess.length !== 1) {
+//         alert("suranych a dan z ga cheiin bir tamga jazynyz.");
+//         return getUserGuess();
+//     }
+//     return guess;
 // }
 
-
-
-
-// 2
-
-// class HangmanGame {
-//     constructor(words) {
-//         this.words = words;
-//         this.currentWord = this.pickRandomWord();
-//         this.guessedLetters = new Set();
-//         this.maxWrongAttempts = 6;
-//         this.wrongAttempts = 0;
+// function updateGuessedWord(guess) {
+//     let newGuessedWord = '';
+//     for (let i = 0; i < chosenWord.length; i++) {
+//         if (chosenWord[i] === guess) {
+//             newGuessedWord += guess;
+//         } else {
+//             newGuessedWord += guessedWord[i];
+//         }
 //     }
+//     guessedWord = newGuessedWord;
+// }
 
-//     pickRandomWord() {
-//         const randomIndex = Math.floor(Math.random() * this.words.length);
-//         return this.words[randomIndex].toUpperCase();
-//     }
+// function playHangman() {
+//     chooseWord();
+//     initializeGame();
 
-//     displayWord() {
-//         let display = '';
-//         for (const letter of this.currentWord) {
-//             if (this.guessedLetters.has(letter)) {
-//                 display += letter + ' ';
-//             } else {
-//                 display += '_ ';
+//     while (true) {
+//         displayGameStatus();
+//         let guess = getUserGuess();
+//         if (guess === null) {
+//             alert("oyun buttu.");
+//             break;
+//         }
+
+//         if (guessedLetters.includes(guess)) {
+//             alert("siz bul tamgany jazdynyz.");
+//             continue;
+//         }
+
+//         guessedLetters.push(guess);
+
+//         if (chosenWord.includes(guess)) {
+//             updateGuessedWord(guess);
+//             if (guessedWord === chosenWord) {
+//                 alert("kuttuktaim! siz sozdu taptynyz: " + chosenWord);
+//                 break;
+//             }
+//         } else {
+//             triesLeft--;
+//             alert("sozdo myndai tamga jok.");
+//             if (triesLeft === 0) {
+//                 alert("siz jenildiniz. katylgan soz bolgon: " + chosenWord);
+//                 break;
 //             }
 //         }
-//         return display.trim();
-//     }
-
-//     makeGuess(letter) {
-//         letter = letter.toUpperCase();
-//         if (this.guessedLetters.has(letter)) {
-//             console.log('Бул тамга алдындачу киргизилген!');
-//         } else {
-//             this.guessedLetters.add(letter);
-//             if (!this.currentWord.includes(letter)) {
-//                 this.wrongAttempts++;
-//             }
-//         }
-//     }
-
-//     gameStatus() {
-//         if (this.wrongAttempts >= this.maxWrongAttempts) {
-//             return 'lose';
-//         } else if (!this.displayWord().includes('_')) {
-//             return 'win';
-//         } else {
-//             return 'continue';
-//         }
 //     }
 // }
 
-// const words = ['HELLO', 'WORLD', 'JAVASCRIPT', 'COMPUTER', 'PROGRAMMING'];
-// const hangman = new HangmanGame(words);
-
-// // Оюнду иштетүү цикли
-// while (hangman.gameStatus() === 'continue') {
-//     console.log('Current word: ', hangman.displayWord());
-    
-//     const guess = prompt('Кат киргизиңиз:');
-//     if (guess === 'отмена') {
-//         break;
-//     }
-    
-//     hangman.makeGuess(guess);
-//     console.log('Колдонуучунун аракеттердин саны: ', hangman.wrongAttempts);
-// }
-
-// if (hangman.gameStatus() === 'win') {
-//     console.log('Табылды! Сөз: ', hangman.currentWord);
-// } else {
-//     console.log('Жеңилбеген! Сөз: ', hangman.currentWord);
-// }
-
+// playHangman();
